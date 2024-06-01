@@ -1,10 +1,5 @@
-﻿using System;
+﻿using System.Drawing;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BreakoutGameLab001
 {
@@ -18,6 +13,7 @@ namespace BreakoutGameLab001
         public Color Color { get; set; }
         public int VelocityX { get; set; }
         public int VelocityY { get; set; }
+
         // 建構子
         public Ball(int x, int y, int radius, int vx, int vy, Color color)
         {
@@ -25,78 +21,83 @@ namespace BreakoutGameLab001
             Y = y;
             Radius = radius;
             Color = color;
-            // 初始化球的速度
             VelocityX = vx;
             VelocityY = vy;
         }
-        // 加入其他方法
 
-        // TODO - 繪製球
-
-        // 移動球
-        public void Move(int Width, int Height)
+        // 繪製球
+        internal void Draw(Graphics gr)
         {
-            // TODO - 根據速度更新球的位置
-
-            //
-            // 水平方向: 檢查球是否碰到牆壁
-            if (X - Radius <= 0)
-            {
-                VelocityX = -VelocityX; // 球反彈
-                X = Radius; // 避免球超出邊界
-            }
-            else if (X + Radius >= Width)
-            {
-                VelocityX = -VelocityX; // 球反彈
-                X = Width - Radius; // 避免球超出邊界
-            }
-
-            // TODO: 垂直方向: 檢查球是否碰到牆壁? 下方牆壁==>遊戲結束!
-
+            gr.FillEllipse(new SolidBrush(this.Color), X - Radius, Y - Radius, Radius * 2, Radius * 2);
         }
 
-        // 檢查碰撞事件 : 球是否與任一磚塊或擋板發生碰撞
-        public void CheckCollision(Paddle paddle, Brick[,] bricks)
+        // 移動球
+        public void Move(int left, int top, int right, int bottom)
         {
-            // (A) 逐一檢查: 球是否與所有的磚塊發生碰撞
-            //     => 磚塊消失, 球反彈!
-            for (int i = 0; i < bricks.GetLength(0); i++)
+            X += VelocityX;
+            Y += VelocityY;
+
+            // 水平方向: 檢查球是否碰到牆壁
+            if (X - Radius <= left)
             {
-                for (int j = 0; j < bricks.GetLength(1); j++)
+                VelocityX = -VelocityX; // 球反彈
+                X = left + Radius; // 避免球超出邊界
+            }
+            else if (X + Radius >= right)
+            {
+                VelocityX = -VelocityX; // 球反彈
+                X = right - Radius; // 避免球超出邊界
+            }
+
+            // 垂直方向: 檢查球是否碰到牆壁
+            if (Y - Radius <= top)
+            {
+                VelocityY = -VelocityY;
+                Y = top + Radius;
+            }
+            else if (Y + Radius >= bottom)
+            {
+                // 這裡返回 false 以表示球碰到了底部，遊戲結束
+                Y = bottom - Radius;
+                throw new GameOverException("Ball missed the paddle!");
+            }
+        }
+
+        // 檢查球與磚塊之間的碰撞
+        public void CheckCollision(List<Brick> bricks)
+        {
+            for (int i = 0; i < bricks.Count; i++)
+            {
+                Brick brick = bricks[i];
+                if (brick != null)
                 {
-                    // 如果磚塊存在
-                    Brick brick = bricks[i, j];
-                    if (brick != null)
+                    if (X + Radius >= brick.X && X - Radius <= brick.X + brick.Width &&
+                        Y + Radius >= brick.Y && Y - Radius <= brick.Y + brick.Height)
                     {
-                        if (X + Radius >= brick.X && X - Radius <= brick.X + brick.Width &&
-                            Y + Radius >= brick.Y && Y - Radius <= brick.Y + brick.Height)
-                        {
-                            VelocityY = -VelocityY; // 球反彈
-                            // 磚塊消失
-                            bricks[i, j] = null;
-
-                            // TODO: 檢查是否所有磚塊都消失 ==> 遊戲結束
-
-                            // break : 一次只讓ㄧ個磚塊消失 
-                            break;
-                        }
+                        VelocityY = -VelocityY; // 球反彈
+                        bricks.RemoveAt(i); // 移除磚塊
+                        i--; // 調整索引以避免跳過下一個磚塊
                     }
                 }
             }
+        }
 
-            // (B) 檢查球是否與擋板發生碰撞
-            //     => 球反彈!
-            if (X + Radius >= paddle.X && X - Radius <= paddle.X + paddle.Width &&
-                               Y + Radius >= paddle.Y && Y - Radius <= paddle.Y + paddle.Height)
+        // 檢查球與球之間的碰撞
+        public void CheckCollision(Ball other)
+        {
+            int dx = other.X - X;
+            int dy = other.Y - Y;
+            int distance = (int)Math.Sqrt(dx * dx + dy * dy);
+
+            if (distance <= Radius + other.Radius)
             {
-                // 球反彈
-                VelocityY = -VelocityY;
-
-                // 確保球不會黏在擋板上 ==> 還有努力空間!
-                if (Y < paddle.Y)
-                    Y = paddle.Y - Radius - 1;
-                else if (Y > paddle.Y + paddle.Height)
-                    Y = paddle.Y + paddle.Height + Radius + 1;
+                // 交換速度
+                int tempVx = VelocityX;
+                int tempVy = VelocityY;
+                VelocityX = other.VelocityX;
+                VelocityY = other.VelocityY;
+                other.VelocityX = tempVx;
+                other.VelocityY = tempVy;
             }
         }
     }

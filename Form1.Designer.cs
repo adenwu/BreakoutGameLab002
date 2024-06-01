@@ -2,15 +2,8 @@
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,72 +13,65 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            lblTime = new Label();
-            panel2 = new Panel();
-            panel1.SuspendLayout();
-            SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlLight;
-            panel1.Controls.Add(lblTime);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(879, 61);
-            panel1.TabIndex = 0;
+            this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.lblTime);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(879, 61);
+            this.panel1.TabIndex = 0;
             // 
             // lblTime
             // 
-            lblTime.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblTime.AutoEllipsis = true;
-            lblTime.AutoSize = true;
-            lblTime.Font = new Font("Microsoft JhengHei UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTime.ForeColor = SystemColors.HotTrack;
-            lblTime.Location = new Point(256, 9);
-            lblTime.Name = "lblTime";
-            lblTime.Size = new Size(244, 41);
-            lblTime.TabIndex = 0;
-            lblTime.Text = "經過時間: XX 秒";
-            lblTime.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblTime.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblTime.AutoEllipsis = true;
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Microsoft JhengHei UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTime.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblTime.Location = new System.Drawing.Point(256, 9);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(244, 41);
+            this.lblTime.TabIndex = 0;
+            this.lblTime.Text = "經過時間: XX 秒";
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
-            panel2.BackColor = SystemColors.ControlDark;
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(879, 493);
-            panel2.TabIndex = 1;
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(879, 493);
+            this.panel2.TabIndex = 1;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(879, 493);
-            Controls.Add(panel1);
-            Controls.Add(panel2);
-            Name = "Form1";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Breakout Game, by James Chen (S1125566)";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(879, 493);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Breakout Game, by James Chen (S1125566)";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.ResumeLayout(false);
         }
 
-        #endregion
-
-        private Panel panel1;
-        private Label lblTime;
-        private Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Panel panel2;
     }
 }
